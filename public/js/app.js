@@ -40,65 +40,54 @@ app.controller('RootController', function($scope) {
 });
 
 
-app.controller('HomeController', function($scope, FirebaseService, UserService) {
-    $scope.pageTitle = 'Sabree';
-	$scope.botName = 'Sabre';
+app.controller('HomeController', function($scope, FirebaseService, UserService, CartService) {
+    $scope.pageTitle = 'Sabre';
+    $scope.botName = 'Sabre';
+    $scope.flightDetails = CartService.ItemsToPurchase;
+
+		FirebaseService.Login()
+			.then(function() {
+				console.log(UserService.displayName);
+				console.log(UserService.uid);
+			});
+
+    function createUserMessage(val) {
+        // 	Start of initialization of chat message element
+        var date = new Date(); // for now
+        var chatMessage = $('<div></div>').attr({
+            class: "chat-message clearfix"
+        });
+        chatMessage.append('<img src="' +UserService.photoURL + '" alt="" width="32" height="32">' +
+				'<div class="chat-message-content clearfix">' +
+				'<h5>Marco Biedermann</h5>' +
+				'<p>' + val + '</p>' +
+				'<span class="chat-time">'+ date.getHours() + ':' + date.getMinutes() + '</span>' +
+				'</div>');
+        // 	End of initialization of chat message element
+        return chatMessage;
+    }
+
 
     $('#live-chat header').on('click', function() {
-            $('.chat').slideToggle(300, 'swing');
+        $('.chat').slideToggle(300, 'swing');
     });
 
-
     $('#chatForm').submit(function(e) {
-    	e.preventDefault();
-    	var chatBox = $('#chatInput');
-    	var message = chatBox.val();
-    	chatBox.val('');
+        e.preventDefault();
+        var chatBox = $('#chatInput');
+        var message = chatBox.val();
+        chatBox.val('');
+        console.log(message);
+        $('.chat-history').append(createUserMessage(message));
+    });
 
-   });
+    function ConvertDateTime() {
 
-
-
-    // FirebaseService.Login()
-    // 	.then(function() {
-    // 		console.log(UserService.displayName);
-    // 		console.log(UserService.uid);
-    // 	});
+    }
 
     // Setting of progress bar
     // var progressbar = $$('.demo-progressbar-inline .progressbar');
     // fw7.setProgressbar(progressbar, 50.5);
-});
-
-
-/*
-	ChatController is the controller which handles all
-	the chat interfaces
-*/
-app.controller('ChatController', function($scope, UserService) {
-    $scope.pageTitle = "SPAR Chat";
-
-
-    // Framework7 Chat message UI
-    var messages = fw7.messages('.messages', {
-        autoLayout: true
-    });
-
-    var messageBar = fw7.messagebar('.messagebar');
-
-    $$('.messagebar .link').on('click', function() {
-        var messageText = messageBar.value().trim();
-
-        // Exit if empty message
-        if (messageText.length === 0) return;
-
-        messageBar.clear();
-
-        messages.addMessage({
-            text: messageText,
-            type: 'sent'
-        })
-    });
 });
 
 
@@ -123,8 +112,9 @@ app.service('FirebaseService', function(UserService) {
     this.Login = function() {
         var authentication = firebase.auth().signInWithPopup(provider).then(function(result) {
             var user = result.user;
-            UserService.displayName = user.displayName;
-            UserService.uid = user.uid;
+						UserService.displayName = user.displayName;
+            UserService.userUid = user.uid;
+						UserService.photoURL = user.photoURL;
         }).catch(function(error) {
             console.log(error);
             fw7.alert('Unable to login to Google account, Please try again.');
@@ -134,6 +124,9 @@ app.service('FirebaseService', function(UserService) {
     }
 });
 
+app.service('BotService', function() {
+	this.reply = '';
+});
 
 /*
 	UserService contains all the User
@@ -141,7 +134,8 @@ app.service('FirebaseService', function(UserService) {
 */
 app.service('UserService', function() {
     this.displayName = '';
-    this.userUID = '';
+    this.userUid = '';
+		this.photoURL = '';
 });
 
 
@@ -150,14 +144,12 @@ app.service('UserService', function() {
 	information
 */
 app.service('CartService', function() {
-	this.ItemsToPurchase = [
-		{
-			departureAirport: 'SIN',
-			arrivalAirport: 'DOH',
-			departureDateTime: '2016-11-01T20:25:00',
-			arrivalDateTime: '2016-11-01T23:25:00,',
-			flightNumber: '739',
-			flightCode: 'QR'
-		}
-	];
+    this.ItemsToPurchase = [{
+        departureAirport: 'SIN',
+        arrivalAirport: 'DOH',
+        departureDateTime: '2016-11-01T20:25:00',
+        arrivalDateTime: '2016-11-01T23:25:00,',
+        flightNumber: '739',
+        flightCode: 'QR'
+    }];
 });

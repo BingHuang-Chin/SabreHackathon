@@ -174,12 +174,49 @@ p { margin: 0; }
 
 .chat-time {
 	float: right;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 .chat-feedback {
 	font-style: italic;
 	margin: 0 0 0 80px;
+}
+
+.navbar {
+	position: fixed;
+	border: 1px solid black;
+}
+
+ul {
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+ul li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #4d4d4d;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+a:hover:not(.active) {
+    background-color: #66ff33
+}
+
+#title {
+	color: #66ff33;
+	margin: auto;
+	text-align: center;
+}
+
+#log-in {
+	margin-left: auto;
 }
 
 /* Let's get this party started */
@@ -203,4 +240,19 @@ p { margin: 0; }
 }
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba(255,0,0,0.4);
+}
+.panel {
+  width: 500px;
+  border: 1px solid #ccc;
+}
+.panel.panel-right.panel-cover {
+  right: -500px !important;
+}
+
+body.with-panel-right-cover .panel-right {
+  transform: translate3d(-500px,0,0) !important;
+}
+
+.panel-right{
+  z-index: 1000 !important;
 }
