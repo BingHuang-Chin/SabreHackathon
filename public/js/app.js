@@ -2,7 +2,6 @@ var app = angular.module('app', []);
 var fw7 = {};
 var mainView = {};
 var $$ = Dom7;
-
 /*
 	Start instantiating socket.io
 	for the application to receive
@@ -85,7 +84,6 @@ app.controller('HomeController', function($scope, FirebaseService, BotService, U
         //  End of initialization of chat message element
         return chatMessage;
     }
-
 
     $('#live-chat header').on('click', function() {
         $('.chat').slideToggle(300, 'swing');
@@ -268,18 +266,3 @@ app.service('HotelService', function() {
         }
     ];
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
