@@ -12,6 +12,11 @@
 	width: 100%;
 }
 
+#detail-output {
+    height: 75vh;
+    overflow-y: auto;
+}
+
 @charset "utf-8";
 
 /* CSS Document */

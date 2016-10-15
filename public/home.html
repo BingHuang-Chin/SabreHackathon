@@ -1,4 +1,4 @@
-<div data-page="home" class="page" ng-controller="HomeController">
+<div data-page="home" class="page" ng-controller="HomeController" ng-cloak>
 
 	<!-- Navigation Bar -->
 	<div class="navbar">
@@ -76,12 +76,16 @@
 				</div>
 
 
-				<div id="detail-output" class="content-block col-50 center">
+				<div id="detail-output" class="content-block col-45 center">
+					<!-- Flights -->
+					<div class="content-block-title">Flights</div>
 					<div class="card" ng-repeat="flightDetail in flightDetails">
-					  <div class="card-header">{{flightDetail.departureAirport}} to {{flightDetail.arrivalAirport}}</div>
+					  <div class="card-header">
+					  	<h1>{{flightDetail.departureAirport}} to {{flightDetail.arrivalAirport}}</h1>
+					  </div>
 					  <div class="card-content">
 					    <div class="card-content-inner">
-					    	<h1>{{flightDetail.flightCode}} {{flightDetail.flightNumber}}</h1>
+					    	<h2>{{flightDetail.flightCode}} {{flightDetail.flightNumber}}</h2>
 					    	<p>
 					    		<h3>Departure Details</h3>
 					    		Date: {{ flightDetail.departureDateTime }}<br />
@@ -90,6 +94,28 @@
 					    		<h3>Arrival Details</h3>
 					    		Date: {{ flightDetail.arrivalDateTime }}<br />
 					    		Time: {{ flightDetail.arrivalDateTime }}<br />
+					    	</p>
+					    </div>
+					  </div>
+					</div>
+
+					<!-- Hotels -->
+					<div class="content-block-title">Hotels</div>
+					<div class="card" ng-repeat="hotelDetail in hotelDetails">
+					  <div class="card-header">
+					  	<h1>{{hotelDetail.hotelName}}</h1> <br />
+					  	{{hotelDetail.location}}
+					  </div>
+					  <div class="card-content">
+					    <div class="card-content-inner">
+					    	<p>
+					    		<h3>Check-In</h3>
+					    		Date: {{ hotelDetail.checkIn }}<br />
+					    		Time: {{ hotelDetail.checkIn }}<br />
+
+					    		<h3>Check-Out</h3>
+					    		Date: {{ hotelDetail.checkOut }}<br />
+					    		Time: {{ hotelDetail.checkOut }}<br />
 					    	</p>
 					    </div>
 					  </div>

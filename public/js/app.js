@@ -40,10 +40,11 @@ app.controller('RootController', function($scope) {
 });
 
 
-app.controller('HomeController', function($scope, FirebaseService, UserService, FlightService) {
+app.controller('HomeController', function($scope, FirebaseService, UserService, FlightService, HotelService) {
     $scope.pageTitle = 'Sabre';
     $scope.botName = 'Sabre';
     $scope.flightDetails = FlightService.myFlights;
+    $scope.hotelDetails = HotelService.myHotels;
 
 	FirebaseService.Login()
 		.then(function() {
@@ -193,3 +194,52 @@ app.service('FlightService', function() {
         }
 	];
 });
+
+
+/*
+    HotelService contains information needed
+    to display details for the hotels
+*/
+app.service('HotelService', function() {
+    this.myHotels = [
+        {
+            location: 'Princep Street',
+            hotelName: 'Marriot Hotel',
+            checkIn: '2016-11-01T23:25:00',
+            checkOut: '2016-11-01T23:25:00'
+        },
+        {
+            location: 'Princep Street',
+            hotelName: 'Marriot Hotel',
+            checkIn: '2016-11-01T23:25:00',
+            checkOut: '2016-11-01T23:25:00'
+        },
+        {
+            location: 'Princep Street',
+            hotelName: 'Marriot Hotel',
+            checkIn: '2016-11-01T23:25:00',
+            checkOut: '2016-11-01T23:25:00'
+        },
+        {
+            location: 'Princep Street',
+            hotelName: 'Marriot Hotel',
+            checkIn: '2016-11-01T23:25:00',
+            checkOut: '2016-11-01T23:25:00'
+        }
+    ];
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
