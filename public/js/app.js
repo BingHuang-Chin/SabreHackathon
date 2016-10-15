@@ -41,7 +41,14 @@ app.controller('RootController', function($scope) {
 
 
 app.controller('HomeController', function($scope, FirebaseService, UserService) {
-	$scope.pageTitle = 'Featured';
+	$scope.pageTitle = 'Sabree';
+
+	
+
+	
+
+
+
 
 	// FirebaseService.Login()
 	// 	.then(function() {
@@ -127,3 +134,30 @@ app.service('UserService', function() {
 	this.displayName = '';
 	this.userUID = '';
 });
+
+
+/*
+	CartService contains all the cart
+	information
+*/
+app.service('CartService', function() {
+	this.ItemsToPurchase = [
+		{
+			departureAirport: 'SIN',
+			arrivalAirport: 'DOH',
+			departureDateTime: '2016-11-01T20:25:00',
+			arrivalDateTime: '2016-11-01T23:25:00,',
+			flightNumber: '739',
+			flightCode: 'QR'
+		}
+	];
+});
+
+
+
+
+
+
+
+
+
