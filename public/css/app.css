@@ -68,10 +68,11 @@ p { margin: 0; }
 #live-chat {
 	bottom: 0;
 	font-size: 14px;
-	right: 24px;
+	right: 0;
 	position: fixed;
 	width: 500px;
   color: #4d4d4d;
+  z-index: 1000;
 }
 
 #live-chat header {
@@ -79,7 +80,7 @@ p { margin: 0; }
 	border-radius: 5px 5px 0 0;
 	color: #fff;
 	cursor: pointer;
-	padding: 16px 24px;
+	padding: 14px 22px;
 }
 
 #live-chat h4:before {
@@ -110,7 +111,7 @@ p { margin: 0; }
 #live-chat input[type="text"] {
 	border: 1px solid #ccc;
 	border-radius: 3px;
-	padding: 8px 0;
+	padding: 14px 3px;
 	outline: none;
 	width: 100%;
 }
@@ -151,7 +152,7 @@ p { margin: 0; }
 }
 
 .chat-history {
-	height: 50vh;
+	height: 75vh;
 	padding: 8px 24px;
 	overflow-y: scroll;
   border-left: 1px solid #ccc;

@@ -54,6 +54,7 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
     	var chatBox = $('#chatInput');
     	var message = chatBox.val();
     	chatBox.val('');
+		console.log(message);
    });
 
 
@@ -136,12 +137,3 @@ app.service('CartService', function() {
 		}
 	];
 });
-
-
-
-
-
-
-
-
-

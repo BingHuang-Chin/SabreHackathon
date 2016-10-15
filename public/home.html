@@ -13,11 +13,23 @@
 
 
 
+	<!-- Side Panels -->
+	<div class="panel-overlay"></div>
+	<div class="panel panel-right panel-cover">
+	    <div class="content-block">
+	      <p>Right Panel content here</p>
+	      <p><a href="#" class="panel-close">Close me</a></p>
+	    </div>
+	</div>
+
+
+
 
 
 	<!-- Page Contents -->
 	<div class="page-content">
 		<div class="content-block">
+			 <p><a href="#" class="open-panel">Open Right Panel</a></p>
 			<div class="row">
 				<div class="col-50 center">
 					<div class="card" ng-repeat="flightDetail in flightDetails">
@@ -37,7 +49,7 @@
 					    </div>
 					  </div>
 					</div>
-					
+
 				</div>
 
 				<!-- Total price -->
@@ -116,7 +128,6 @@
 
 						<input type="text" id="chatInput" placeholder="Type your message…" autofocus>
 						<input type="hidden">
-
 					</fieldset>
 
 				</form>
