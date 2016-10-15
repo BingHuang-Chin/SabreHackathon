@@ -11,12 +11,6 @@ var $$ = Dom7;
 
 
 
-
-
-
-
-
-
 /*
 	Start running Angular together with Framework7
 */
@@ -49,14 +43,14 @@ app.controller('RootController', function($scope) {
 app.controller('HomeController', function($scope, FirebaseService, UserService) {
 	$scope.pageTitle = 'Featured';
 
-	FirebaseService.Login()
-		.then(function() {
-			console.log(UserService.displayName);
-			console.log(UserService.uid);
-		});
+	// FirebaseService.Login()
+	// 	.then(function() {
+	// 		console.log(UserService.displayName);
+	// 		console.log(UserService.uid);
+	// 	});
 
 	// Setting of progress bar
-    // var progressbar = $$('.demo-progressbar-inline .progressbar'); 
+    // var progressbar = $$('.demo-progressbar-inline .progressbar');
     // fw7.setProgressbar(progressbar, 50.5);
 });
 
@@ -90,43 +84,6 @@ app.controller('ChatController', function($scope, UserService) {
 		})
 	});
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*
@@ -169,10 +126,3 @@ app.service('UserService', function() {
 	this.displayName = '';
 	this.userUID = '';
 });
-
-
-
-
-
-
-
