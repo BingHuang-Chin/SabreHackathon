@@ -45,11 +45,12 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
     $scope.botName = 'Sabre';
     $scope.flightDetails = FlightService.myFlights;
 
-		FirebaseService.Login()
-			.then(function() {
-				console.log(UserService.displayName);
-				console.log(UserService.uid);
-			});
+	FirebaseService.Login()
+		.then(function() {
+			console.log(UserService.displayName);
+			console.log(UserService.uid);
+		});
+
 
     function createUserMessage(val) {
         // 	Start of initialization of chat message element
@@ -59,13 +60,14 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
         });
         chatMessage.append('<img src="' +UserService.photoURL + '" alt="" width="32" height="32">' +
 				'<div class="chat-message-content clearfix">' +
-				'<h5>Marco Biedermann</h5>' +
+				'<h5>' + UserService.displayName + '</h5>' +
 				'<p>' + val + '</p>' +
 				'<span class="chat-time">'+ date.getHours() + ':' + date.getMinutes() + '</span>' +
 				'</div>');
         // 	End of initialization of chat message element
         return chatMessage;
     }
+
 
     $('#live-chat header').on('click', function() {
         $('.chat').slideToggle(300, 'swing');
@@ -78,10 +80,8 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
         chatBox.val('');
         console.log(message);
         $('.chat-history').append(createUserMessage(message));
-        $(".chat-history").animate({ scrollTop: $('.chat-history').prop("scrollHeight")}, 500);
+        $(".chat-history").animate({ scrollTop: $('.chat-history').prop("scrollHeight")}, 250);
     });
-
-    $scope.flightDetails = FlightService.myFlights;
 
     // Setting of progress bar
     // var progressbar = $$('.demo-progressbar-inline .progressbar');
@@ -110,9 +110,9 @@ app.service('FirebaseService', function(UserService) {
     this.Login = function() {
         var authentication = firebase.auth().signInWithPopup(provider).then(function(result) {
             var user = result.user;
-						UserService.displayName = user.displayName;
+			UserService.displayName = user.displayName;
             UserService.userUid = user.uid;
-						UserService.photoURL = user.photoURL;
+			UserService.photoURL = user.photoURL;
         }).catch(function(error) {
             console.log(error);
             fw7.alert('Unable to login to Google account, Please try again.');
@@ -133,7 +133,7 @@ app.service('BotService', function() {
 app.service('UserService', function() {
     this.displayName = '';
     this.userUid = '';
-		this.photoURL = '';
+	this.photoURL = '';
 });
 
 
