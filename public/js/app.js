@@ -48,11 +48,6 @@ app.controller('HomeController', function($scope, FirebaseService, UserService) 
 	// 		console.log(UserService.displayName);
 	// 		console.log(UserService.uid);
 	// 	});
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 2f3b7cbf4e9447b57cfeeff2888166ef177c2db0
 
 	// Setting of progress bar
     // var progressbar = $$('.demo-progressbar-inline .progressbar');
