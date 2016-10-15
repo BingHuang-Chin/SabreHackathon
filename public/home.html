@@ -15,10 +15,31 @@
 
 	<!-- Side Panels -->
 	<div class="panel panel-right panel-cover">
-	    <div class="content-block">
-	      <p>Right Panel content here</p>
-	      <p><a href="#" class="close-panel">Close me</a></p>
-	    </div>
+		<div class="content-block">
+			<p>Right Panel content here</p>
+			<p><a href="#" class="close-panel">X</a></p>
+			<p>
+				<div class="card" ng-repeat="detail in details">
+					<div class="card-header">
+						<h1>{{detail.departureAirport}} to {{detail.arrivalAirport}}</h1>
+					</div>
+					<div class="card-content">
+						<div class="card-content-inner">
+							<h2>{{detail.flightCode}} {{detail.flightNumber}}</h2>
+							<p>
+								<h3>Departure Details</h3>
+								Date: {{ detail.departureDateTime }}<br />
+								Time: {{ detail.departureDateTime }}<br />
+
+								<h3>Arrival Details</h3>
+								Date: {{ detail.arrivalDateTime }}<br />
+								Time: {{ detail.arrivalDateTime }}<br />
+							</p>
+						</div>
+					</div>
+				</div>
+			</p>
+		</div>
 	</div>
 
 

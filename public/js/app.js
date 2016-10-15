@@ -40,16 +40,17 @@ app.controller('RootController', function($scope) {
 });
 
 
-app.controller('HomeController', function($scope, FirebaseService, UserService, FlightService, HotelService) {
+app.controller('HomeController', function($scope, FirebaseService, BotService, UserService, FlightService, HotelService) {
     $scope.pageTitle = 'Sabre';
     $scope.botName = 'Sabre';
     $scope.flightDetails = FlightService.myFlights;
     $scope.hotelDetails = HotelService.myHotels;
+    $scope.details = FlightService.myFlights;
 
 	FirebaseService.Login()
 		.then(function() {
 			console.log(UserService.displayName);
-			console.log(UserService.uid);
+			console.log(UserService.userUid);
 		});
 
 
@@ -95,12 +96,16 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
         var chatBox = $('#chatInput');
         var message = chatBox.val();
         chatBox.val('');
-        console.log(message);
         $('.chat-history').append(createUserMessage(message));
         $(".chat-history").animate({ scrollTop: $('.chat-history').prop("scrollHeight")}, 250);
 
         // Query to Python
-        $('.chat-history').append(createBotMessage('blabla'));
+        // BotService.sendMessage(message)
+        //     .then(function(result) {
+        //         console.log(result);
+        //     });
+
+        fw7.openPanel('right');
     });
 });
 
@@ -143,13 +148,9 @@ app.service('FirebaseService', function(UserService) {
 app.service('BotService', function($http) {
     this.sendMessage = function(message) {
         var response = $http({
-            method: 'POST',
-            url: 'http://sabrehacksg-binghuang.rhcloud.com/getFlight',
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-            data: $.param({
-                userText: message
-            })
-        });
+                method: 'GET',
+                url: 'http://sabrehacksg-binghuang.rhcloud.com/getFlight'
+            });
 
         return response;
     };
@@ -163,6 +164,12 @@ app.service('UserService', function() {
     this.displayName = '';
     this.userUid = '';
 	this.photoURL = '';
+
+    // Adding flight to the database, user's purchased
+    // ticket
+    this.AddFlight = function() {
+        var url = '/AddFlight/' + this.userUid;
+    }
 });
 
 
@@ -170,7 +177,8 @@ app.service('UserService', function() {
 	FlightService contains all the cart
 	information
 */
-app.service('FlightService', function() {
+app.service('FlightService', function($http) {
+    this.flightDetails = [];
 	this.myFlights = [
 		{
 			departureAirport: 'SIN',
@@ -222,7 +230,9 @@ app.service('FlightService', function() {
         }
 	];
 
+    this.fetchFlightDetails = function() {
 
+    }
 });
 
 
