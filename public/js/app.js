@@ -78,6 +78,7 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
         chatBox.val('');
         console.log(message);
         $('.chat-history').append(createUserMessage(message));
+        $(".chat-history").animate({ scrollTop: $('.chat-history').prop("scrollHeight")}, 500);
     });
 
     $scope.flightDetails = FlightService.myFlights;
