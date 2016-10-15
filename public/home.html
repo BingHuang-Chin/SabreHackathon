@@ -18,7 +18,7 @@
 	<div class="panel panel-right panel-cover">
 	    <div class="content-block">
 	      <p>Right Panel content here</p>
-	      <p><a href="#" class="panel-close">Close me</a></p>
+	      <p><a href="#" class="close-panel">Close me</a></p>
 	    </div>
 	</div>
 
@@ -28,9 +28,55 @@
 
 	<!-- Page Contents -->
 	<div class="page-content">
+
+		<!-- Cards -->
 		<div class="content-block">
-			 <p><a href="#" class="open-panel">Open Right Panel</a></p>
 			<div class="row">
+
+				<!-- SideBar -->
+				<div id="side-panel" class="col-20">
+					<div class="content-block-title">Filter</div>
+					<div class="list-block">
+						<ul>
+							<li>
+							<label class="label-checkbox item-content">
+									<input type="checkbox" value="flights">
+									<div class="item-media">
+										<i class="icon icon-form-checkbox"></i>
+									</div>
+									<div class="item-inner">
+										<div class="item-title">Display Flights</div>
+									</div>
+								</label>
+							</li>
+							<li>
+							<label class="label-checkbox item-content">
+									<input type="checkbox" value="hotels">
+									<div class="item-media">
+										<i class="icon icon-form-checkbox"></i>
+									</div>
+									<div class="item-inner">
+										<div class="item-title">Display Hotels</div>
+									</div>
+								</label>
+							</li>
+							<li>
+								<label class="label-checkbox item-content">
+									<input type="checkbox" value="itinerary">
+									<div class="item-media">
+										<i class="icon icon-form-checkbox"></i>
+									</div>
+									<div class="item-inner">
+										<div class="item-title">Display Itinerary</div>
+									</div>
+								</label>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+
+
 				<div class="col-50 center">
 					<div class="card" ng-repeat="flightDetail in flightDetails">
 					  <div class="card-header">{{flightDetail.departureAirport}} to {{flightDetail.arrivalAirport}}</div>
@@ -39,12 +85,12 @@
 					    	<h1>{{flightDetail.flightCode}} {{flightDetail.flightNumber}}</h1>
 					    	<p>
 					    		<h3>Departure Details</h3>
-					    		Date: <br />
-					    		Time: <br />
+					    		Date: {{ flightDetail.departureDateTime }}<br />
+					    		Time: {{ flightDetail.departureDateTime }}<br />
 
 					    		<h3>Arrival Details</h3>
-					    		Date: <br />
-					    		Time: <br />
+					    		Date: {{ flightDetail.arrivalDateTime }}<br />
+					    		Time: {{ flightDetail.arrivalDateTime }}<br />
 					    	</p>
 					    </div>
 					  </div>

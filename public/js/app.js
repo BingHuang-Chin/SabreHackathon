@@ -40,7 +40,7 @@ app.controller('RootController', function($scope) {
 });
 
 
-app.controller('HomeController', function($scope, FirebaseService, UserService, CartService) {
+app.controller('HomeController', function($scope, FirebaseService, UserService, FlightService) {
     $scope.pageTitle = 'Sabree';
 	$scope.botName = 'Sabre';
 
@@ -58,7 +58,7 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
    });
 
 
-   $scope.flightDetails = CartService.ItemsToPurchase;
+   $scope.flightDetails = FlightService.myFlights;
 
 
 
@@ -122,11 +122,11 @@ app.service('UserService', function() {
 
 
 /*
-	CartService contains all the cart
+	FlightService contains all the cart
 	information
 */
-app.service('CartService', function() {
-	this.ItemsToPurchase = [
+app.service('FlightService', function() {
+	this.myFlights = [
 		{
 			departureAirport: 'SIN',
 			arrivalAirport: 'DOH',
@@ -134,6 +134,46 @@ app.service('CartService', function() {
 			arrivalDateTime: '2016-11-01T23:25:00,',
 			flightNumber: '739',
 			flightCode: 'QR'
-		}
+		},
+        {
+            departureAirport: 'LAS',
+            arrivalAirport: 'SIN',
+            departureDateTime: '2016-11-01T20:25:00',
+            arrivalDateTime: '2016-11-01T23:25:00,',
+            flightNumber: '739',
+            flightCode: 'QR'
+        },
+        {
+            departureAirport: 'LAS',
+            arrivalAirport: 'SIN',
+            departureDateTime: '2016-11-01T20:25:00',
+            arrivalDateTime: '2016-11-01T23:25:00,',
+            flightNumber: '739',
+            flightCode: 'QR'
+        },
+        {
+            departureAirport: 'LAS',
+            arrivalAirport: 'SIN',
+            departureDateTime: '2016-11-01T20:25:00',
+            arrivalDateTime: '2016-11-01T23:25:00,',
+            flightNumber: '739',
+            flightCode: 'QR'
+        },
+        {
+            departureAirport: 'LAS',
+            arrivalAirport: 'SIN',
+            departureDateTime: '2016-11-01T20:25:00',
+            arrivalDateTime: '2016-11-01T23:25:00,',
+            flightNumber: '739',
+            flightCode: 'QR'
+        },
+        {
+            departureAirport: 'LAS',
+            arrivalAirport: 'SIN',
+            departureDateTime: '2016-11-01T20:25:00',
+            arrivalDateTime: '2016-11-01T23:25:00,',
+            flightNumber: '739',
+            flightCode: 'QR'
+        }
 	];
 });

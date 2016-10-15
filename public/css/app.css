@@ -3,6 +3,11 @@
 	margin-right: auto;
 }
 
+#side-panel {
+	position: fixed;
+	left: 5vh;
+}
+
 @charset "utf-8";
 /* CSS Document */
 
