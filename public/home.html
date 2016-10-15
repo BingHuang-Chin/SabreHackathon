@@ -10,19 +10,32 @@
 	</div>
 
 
+
+
+
+
+
 	<!-- Page Contents -->
 	<div class="page-content">
 		<div class="content-block">
 			<div class="row">
 				<div class="col-50 center">
-					<div class="card">
-					  <div class="card-header">Card header</div>
+					<div class="card" ng-repeat="flightDetail in flightDetails">
+					  <div class="card-header">{{flightDetail.departureAirport}} to {{flightDetail.arrivalAirport}}</div>
 					  <div class="card-content">
 					    <div class="card-content-inner">
-					    	Card with header and footer. Card header is used to display card title and footer for some additional information or for custom actions.
+					    	<h1>{{flightDetail.flightCode}} {{flightDetail.flightNumber}}</h1>
+					    	<p>
+					    		<h3>Departure Details</h3>
+					    		Date: <br />
+					    		Time: <br />
+
+					    		<h3>Arrival Details</h3>
+					    		Date: <br />
+					    		Time: <br />
+					    	</p>
 					    </div>
 					  </div>
-					  <div class="card-footer">Card Footer</div>
 					</div>
 					
 				</div>

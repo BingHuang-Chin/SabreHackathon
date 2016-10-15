@@ -40,7 +40,7 @@ app.controller('RootController', function($scope) {
 });
 
 
-app.controller('HomeController', function($scope, FirebaseService, UserService) {
+app.controller('HomeController', function($scope, FirebaseService, UserService, CartService) {
     $scope.pageTitle = 'Sabree';
 	$scope.botName = 'Sabre';
 
@@ -54,11 +54,16 @@ app.controller('HomeController', function($scope, FirebaseService, UserService) 
     	var chatBox = $('#chatInput');
     	var message = chatBox.val();
     	chatBox.val('');
-
-    	
    });
 
 
+   $scope.flightDetails = CartService.ItemsToPurchase;
+
+
+
+   function ConvertDateTime() {
+
+   }
 
     // FirebaseService.Login()
     // 	.then(function() {
@@ -69,37 +74,6 @@ app.controller('HomeController', function($scope, FirebaseService, UserService) 
     // Setting of progress bar
     // var progressbar = $$('.demo-progressbar-inline .progressbar');
     // fw7.setProgressbar(progressbar, 50.5);
-});
-
-
-/*
-	ChatController is the controller which handles all
-	the chat interfaces
-*/
-app.controller('ChatController', function($scope, UserService) {
-    $scope.pageTitle = "SPAR Chat";
-
-
-    // Framework7 Chat message UI
-    var messages = fw7.messages('.messages', {
-        autoLayout: true
-    });
-
-    var messageBar = fw7.messagebar('.messagebar');
-
-    $$('.messagebar .link').on('click', function() {
-        var messageText = messageBar.value().trim();
-
-        // Exit if empty message
-        if (messageText.length === 0) return;
-
-        messageBar.clear();
-
-        messages.addMessage({
-            text: messageText,
-            type: 'sent'
-        })
-    });
 });
 
 
