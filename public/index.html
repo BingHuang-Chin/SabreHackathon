@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#2196f3">
+
+	<title>Welcome</title>
+
+	<link rel="stylesheet" href="/dist/framework7/css/framework7.material.min.css">
+	<link rel="stylesheet" href="/dist/framework7/css/framework7.material.colors.min.css">
+	<link rel="stylesheet" href="/css/app.css">
+</head>
+<body ng-controller="RootController" ng-cloak>
+
+	<div class="views">
+		<div class="view view-main">
+			<div class="pages navbar-fixed">
+				<!-- Dynamic pages will load here -->
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>
+	<script type="text/javascript" src="/dist/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/dist/angular/angular.min.js"></script>
+	<script type="text/javascript" src="/dist/framework7/js/framework7.min.js"></script>
+	<script type="text/javascript" src="/js/framework7.angular.hook.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
+	
+	<script>
+		// if ('serviceWorker' in navigator) {
+		// 	navigator.serviceWorker.register('/service-worker.js')
+		// 	.then(function() {
+		// 		console.log('Service Worker Registered');
+		// 	});
+		// }
+	</script>
+</body>
+</html>	
