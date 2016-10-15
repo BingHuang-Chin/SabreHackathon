@@ -49,11 +49,13 @@ app.controller('RootController', function($scope) {
 app.controller('HomeController', function($scope, FirebaseService, UserService) {
 	$scope.pageTitle = 'Featured';
 
-	FirebaseService.Login()
-		.then(function() {
-			console.log(UserService.displayName);
-			console.log(UserService.uid);
-		});
+	// FirebaseService.Login()
+	// 	.then(function() {
+	// 		console.log(UserService.displayName);
+	// 		console.log(UserService.uid);
+	// 	});
+
+
 
 	// Setting of progress bar
     // var progressbar = $$('.demo-progressbar-inline .progressbar'); 
@@ -153,6 +155,7 @@ app.service('FirebaseService', function(UserService) {
 		  UserService.displayName = user.displayName;
 		  UserService.uid = user.uid;
 		}).catch(function(error) {
+			console.log(error);
 			fw7.alert('Unable to login to Google account, Please try again.');
 		});
 
