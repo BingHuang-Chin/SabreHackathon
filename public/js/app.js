@@ -68,6 +68,22 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
         return chatMessage;
     }
 
+    function createBotMessage(val) {
+        //  Start of initialization of chat message element
+        var date = new Date(); // for now
+        var chatMessage = $('<div></div>').attr({
+            class: "chat-message clearfix"
+        });
+        chatMessage.append('<img src="https://bot-framework.azureedge.net/bot-icons-v1/bot-framework-default-7.png" alt="" width="32" height="32">' +
+                '<div class="chat-message-content clearfix">' +
+                '<h5>Marco Biedermann</h5>' +
+                '<p>' + val + '</p>' +
+                '<span class="chat-time">'+ date.getHours() + ':' + date.getMinutes() + '</span>' +
+                '</div>');
+        //  End of initialization of chat message element
+        return chatMessage;
+    }
+
     $('#live-chat header').on('click', function() {
         $('.chat').slideToggle(300, 'swing');
     });
@@ -80,12 +96,13 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
         console.log(message);
         $('.chat-history').append(createUserMessage(message));
         $(".chat-history").animate({ scrollTop: $('.chat-history').prop("scrollHeight")}, 250);
-    });
 
-    // Setting of progress bar
-    // var progressbar = $$('.demo-progressbar-inline .progressbar');
-    // fw7.setProgressbar(progressbar, 50.5);
+        // Query to Python
+        $('.chat-history').append(createBotMessage('blabla'));
+    });
 });
+
+
 
 
 /*
@@ -121,8 +138,19 @@ app.service('FirebaseService', function(UserService) {
     }
 });
 
-app.service('BotService', function() {
-	this.reply = '';
+app.service('BotService', function($http) {
+    this.sendMessage = function(message) {
+        var response = $http({
+            method: 'POST',
+            url: 'http://sabrehacksg-binghuang.rhcloud.com/getFlight',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data: $.param({
+                userText: message
+            })
+        });
+
+        return response;
+    };
 });
 
 /*
@@ -191,6 +219,8 @@ app.service('FlightService', function() {
             flightCode: 'QR'
         }
 	];
+
+
 });
 
 
