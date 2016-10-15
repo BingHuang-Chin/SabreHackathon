@@ -41,36 +41,46 @@ app.controller('RootController', function($scope) {
 
 
 app.controller('HomeController', function($scope, FirebaseService, UserService, FlightService) {
-    $scope.pageTitle = 'Sabree';
-	$scope.botName = 'Sabre';
+    $scope.pageTitle = 'Sabre';
+    $scope.botName = 'Sabre';
+    $scope.flightDetails = FlightService.myFlights;
+
+		FirebaseService.Login()
+			.then(function() {
+				console.log(UserService.displayName);
+				console.log(UserService.uid);
+			});
+
+    function createUserMessage(val) {
+        // 	Start of initialization of chat message element
+        var date = new Date(); // for now
+        var chatMessage = $('<div></div>').attr({
+            class: "chat-message clearfix"
+        });
+        chatMessage.append('<img src="' +UserService.photoURL + '" alt="" width="32" height="32">' +
+				'<div class="chat-message-content clearfix">' +
+				'<h5>Marco Biedermann</h5>' +
+				'<p>' + val + '</p>' +
+				'<span class="chat-time">'+ date.getHours() + ':' + date.getMinutes() + '</span>' +
+				'</div>');
+        // 	End of initialization of chat message element
+        return chatMessage;
+    }
 
     $('#live-chat header').on('click', function() {
-            $('.chat').slideToggle(300, 'swing');
+        $('.chat').slideToggle(300, 'swing');
     });
 
-
     $('#chatForm').submit(function(e) {
-    	e.preventDefault();
-    	var chatBox = $('#chatInput');
-    	var message = chatBox.val();
-    	chatBox.val('');
-		console.log(message);
-   });
+        e.preventDefault();
+        var chatBox = $('#chatInput');
+        var message = chatBox.val();
+        chatBox.val('');
+        console.log(message);
+        $('.chat-history').append(createUserMessage(message));
+    });
 
-
-   $scope.flightDetails = FlightService.myFlights;
-
-
-
-   function ConvertDateTime() {
-
-   }
-
-    // FirebaseService.Login()
-    // 	.then(function() {
-    // 		console.log(UserService.displayName);
-    // 		console.log(UserService.uid);
-    // 	});
+    $scope.flightDetails = FlightService.myFlights;
 
     // Setting of progress bar
     // var progressbar = $$('.demo-progressbar-inline .progressbar');
@@ -99,8 +109,9 @@ app.service('FirebaseService', function(UserService) {
     this.Login = function() {
         var authentication = firebase.auth().signInWithPopup(provider).then(function(result) {
             var user = result.user;
-            UserService.displayName = user.displayName;
-            UserService.uid = user.uid;
+						UserService.displayName = user.displayName;
+            UserService.userUid = user.uid;
+						UserService.photoURL = user.photoURL;
         }).catch(function(error) {
             console.log(error);
             fw7.alert('Unable to login to Google account, Please try again.');
@@ -110,6 +121,9 @@ app.service('FirebaseService', function(UserService) {
     }
 });
 
+app.service('BotService', function() {
+	this.reply = '';
+});
 
 /*
 	UserService contains all the User
@@ -117,7 +131,8 @@ app.service('FirebaseService', function(UserService) {
 */
 app.service('UserService', function() {
     this.displayName = '';
-    this.userUID = '';
+    this.userUid = '';
+		this.photoURL = '';
 });
 
 

@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html ng-app="app">
+
 <head>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="theme-color" content="#2196f3">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="theme-color" content="#2196f3">
 
 	<title>SabreHack</title>
 
-	<link rel="stylesheet" href="/dist/framework7/css/framework7.material.min.css">
+	<link rel="stylesheet" href="/dist/framework7/css/framework7.material.css">
 	<link rel="stylesheet" href="/dist/framework7/css/framework7.material.colors.min.css">
 	<link rel="stylesheet" href="/css/app.css">
 </head>
+
 <body ng-controller="RootController" ng-cloak>
 
 	<div class="views">
 		<div class="view view-main">
 			<div class="pages navbar-fixed">
+				<div class="navbar">
+					<div class="navbar-inner">
+						<ul>
+							<li><a href="#home">Home</a></li>
+							<li><a href="#news">News</a></li>
+							<li><a href="#contact">Contact</a></li>
+							<li><a href="#about">About</a></li>
+						</ul>
+						<span id="title">Travor</span>
+						<ul id="log-in">
+							<li><a href="#logIn">Log In</a></li>
+							<li><a href="#signUp">Sign Up</a></li>
+						</ul>
+					</div>
+				</div>
 				<!-- Dynamic pages will load here -->
 			</div>
 		</div>
@@ -41,4 +58,5 @@
 		// }
 	</script>
 </body>
+
 </html>
