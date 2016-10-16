@@ -15,10 +15,35 @@
 
 	<!-- Side Panels -->
 	<div class="panel panel-right panel-cover">
-	    <div class="content-block">
-	      <p>Right Panel content here</p>
-	      <p><a href="#" class="close-panel">Close me</a></p>
-	    </div>
+		<div class="content-block">
+			<p>Right Panel content here</p>
+			<p><a href="#" class="close-panel">X</a></p>
+			<p>
+				<div class="card" ng-repeat="detail in details">
+					<div class="card-header">
+						<h1>{{detail.Path}}</h1>
+					</div>
+					<div class="card-content">
+						<div class="card-content-inner">
+							<h2>{{detail.flightCode}} {{detail.flightNumber}}</h2>
+							<p>
+								<h3>Departure Details</h3>
+								{{ detail.DepartureDateTime }}<br />
+
+								<h3>Arrival Details</h3>
+								{{ detail.ArrivalDateTime }}<br />
+
+								<h3>Price</h3>
+								{{detail.CurrencyCode}} {{detail.Amount}}
+							</p>
+						</div>
+					</div>
+					<div class="card-footer">
+						<p><a href="#" class="button">Purchase</a>
+					</div>
+				</div>
+			</p>
+		</div>
 	</div>
 
 
@@ -39,7 +64,7 @@
 						<ul>
 							<li>
 								<label class="label-checkbox item-content">
-									<input type="checkbox" value="flights">
+									<input type="checkbox" value="flights" ng-model="displayFlight">
 									<div class="item-media">
 										<i class="icon icon-form-checkbox"></i>
 									</div>
@@ -50,7 +75,7 @@
 							</li>
 							<li>
 								<label class="label-checkbox item-content">
-									<input type="checkbox" value="hotels">
+									<input type="checkbox" value="hotels" ng-model="displayHotel">
 									<div class="item-media">
 										<i class="icon icon-form-checkbox"></i>
 									</div>
@@ -78,8 +103,8 @@
 
 				<div id="detail-output" class="content-block col-45 center">
 					<!-- Flights -->
-					<div class="content-block-title">Flights</div>
-					<div class="card" ng-repeat="flightDetail in flightDetails">
+					<div class="content-block-title" ng-if="displayFlight || displayFlight == false && displayHotel == false">Flights</div>
+					<div class="card" ng-repeat="flightDetail in flightDetails" ng-if="displayFlight || displayFlight == false && displayHotel == false ">
 					  <div class="card-header">
 					  	<h1>{{flightDetail.departureAirport}} to {{flightDetail.arrivalAirport}}</h1>
 					  </div>
@@ -100,8 +125,8 @@
 					</div>
 
 					<!-- Hotels -->
-					<div class="content-block-title">Hotels</div>
-					<div class="card" ng-repeat="hotelDetail in hotelDetails">
+					<div class="content-block-title" ng-if="displayHotel || displayFlight == false && displayHotel == false">Hotels</div>
+					<div class="card" ng-repeat="hotelDetail in hotelDetails" ng-if="displayHotel || displayFlight == false && displayHotel == false ">
 					  <div class="card-header">
 					  	<h1>{{hotelDetail.hotelName}}</h1> <br />
 					  	{{hotelDetail.location}}

@@ -2,6 +2,7 @@ var app = angular.module('app', []);
 var fw7 = {};
 var mainView = {};
 var $$ = Dom7;
+
 /*
 	Start instantiating socket.io
 	for the application to receive
@@ -12,58 +13,62 @@ var $$ = Dom7;
 
 /*
 	Start running Angular together with Framework7
-*/
-app.run(function() {
-    fw7 = new Framework7({
-        pushState: true,
-        angular: true
+    */
+    app.run(function() {
+        fw7 = new Framework7({
+            pushState: true,
+            angular: true
+        });
+        mainView = fw7.addView('.view-main', {});
     });
-    mainView = fw7.addView('.view-main', {});
-});
 
 
 /*
 	Configuration for Angular
-*/
-app.config(function() {
-    window.location.hash = '#!/home.html';
-});
+    */
+    app.config(function() {
+        window.location.hash = '#!/home.html';
+    });
 
 
 /*
 	RootController & HomeController is the starting
 	page for this whole application
-*/
-app.controller('RootController', function($scope) {
-    $scope.pageTitle = 'Welcome';
-});
+    */
+    app.controller('RootController', function($scope) {
+        $scope.pageTitle = 'Welcome';
+    });
 
 
-app.controller('HomeController', function($scope, FirebaseService, UserService, FlightService, HotelService) {
-    $scope.pageTitle = 'Sabre';
-    $scope.botName = 'Sabre';
-    $scope.flightDetails = FlightService.myFlights;
-    $scope.hotelDetails = HotelService.myHotels;
+    app.controller('HomeController', function($scope, FirebaseService, BotService, UserService, FlightService, HotelService) {
+        $scope.pageTitle = 'Sabre';
+        $scope.botName = 'Sabre';
+        $scope.flightDetails = FlightService.myFlights;
+        $scope.hotelDetails = HotelService.myHotels;
+        $scope.details = FlightService.myFlights;
 
-	FirebaseService.Login()
-		.then(function() {
-			console.log(UserService.displayName);
-			console.log(UserService.uid);
-		});
+        $scope.displayFlight = false;
+        $scope.displayHotel = false;
+
+        FirebaseService.Login()
+        .then(function() {
+         console.log(UserService.displayName);
+         console.log(UserService.userUid);
+     });
 
 
-    function createUserMessage(val) {
+        function createUserMessage(val) {
         // 	Start of initialization of chat message element
         var date = new Date(); // for now
         var chatMessage = $('<div></div>').attr({
             class: "chat-message clearfix"
         });
         chatMessage.append('<img src="' +UserService.photoURL + '" alt="" width="32" height="32">' +
-				'<div class="chat-message-content clearfix">' +
-				'<h5>' + UserService.displayName + '</h5>' +
-				'<p>' + val + '</p>' +
-				'<span class="chat-time">'+ date.getHours() + ':' + date.getMinutes() + '</span>' +
-				'</div>');
+            '<div class="chat-message-content clearfix">' +
+            '<h5>' + UserService.displayName + '</h5>' +
+            '<p>' + val + '</p>' +
+            '<span class="chat-time">'+ date.getHours() + ':' + date.getMinutes() + '</span>' +
+            '</div>');
         // 	End of initialization of chat message element
         return chatMessage;
     }
@@ -75,11 +80,11 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
             class: "chat-message clearfix"
         });
         chatMessage.append('<img src="https://bot-framework.azureedge.net/bot-icons-v1/bot-framework-default-7.png" alt="" width="32" height="32">' +
-                '<div class="chat-message-content clearfix">' +
-                '<h5>Marco Biedermann</h5>' +
-                '<p>' + val + '</p>' +
-                '<span class="chat-time">'+ date.getHours() + ':' + date.getMinutes() + '</span>' +
-                '</div>');
+            '<div class="chat-message-content clearfix">' +
+            '<h5>Marco Biedermann</h5>' +
+            '<p>' + val + '</p>' +
+            '<span class="chat-time">'+ date.getHours() + ':' + date.getMinutes() + '</span>' +
+            '</div>');
         //  End of initialization of chat message element
         return chatMessage;
     }
@@ -93,12 +98,41 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
         var chatBox = $('#chatInput');
         var message = chatBox.val();
         chatBox.val('');
-        console.log(message);
         $('.chat-history').append(createUserMessage(message));
         $(".chat-history").animate({ scrollTop: $('.chat-history').prop("scrollHeight")}, 250);
 
         // Query to Python
-        $('.chat-history').append(createBotMessage('blabla'));
+        BotService.sendMessage(message)
+        .then(function(result) {
+            console.log(result.data.entities);
+            switch(result.data.intents[0].intent){
+                case "findFlight": {
+                    // console.log(result.data.intents[0].intent);
+                
+                    // // Bind Data
+
+                    // // Open Panel
+                    fw7.openPanel('right');
+                    break;
+                }
+                case "greetings": {
+                    console.log(result.data.intents[0].intent);
+                    break;
+                }
+                case "checkout": {
+                    console.log(result.data.intents[0].intent);
+                    break;
+                }
+                case "goWithCount": {
+                    console.log(result.data.intents[0].intent);
+                    break;
+                }
+                default: 
+                $('.chat-history').append(createBotMessage("Sorry, I did not understand that. Could you please repeat yourself?"));
+            }
+                // fw7.openPanel('right');
+            });
+
     });
 });
 
@@ -108,8 +142,8 @@ app.controller('HomeController', function($scope, FirebaseService, UserService, 
 /*
 	FirebaseService contains firebase authentication
 	service
-*/
-app.service('FirebaseService', function(UserService) {
+    */
+    app.service('FirebaseService', function(UserService) {
     // Configuration for init of firebase
     var config = {
         apiKey: "AIzaSyDzTfFPfYuboWudqi04RyEqncSQ3ELzCzk",
@@ -126,9 +160,9 @@ app.service('FirebaseService', function(UserService) {
     this.Login = function() {
         var authentication = firebase.auth().signInWithPopup(provider).then(function(result) {
             var user = result.user;
-			UserService.displayName = user.displayName;
+            UserService.displayName = user.displayName;
             UserService.userUid = user.uid;
-			UserService.photoURL = user.photoURL;
+            UserService.photoURL = user.photoURL;
         }).catch(function(error) {
             console.log(error);
             fw7.alert('Unable to login to Google account, Please try again.');
@@ -138,98 +172,120 @@ app.service('FirebaseService', function(UserService) {
     }
 });
 
-app.service('BotService', function($http) {
-    this.sendMessage = function(message) {
-        var response = $http({
-            method: 'POST',
-            url: 'http://sabrehacksg-binghuang.rhcloud.com/getFlight',
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-            data: $.param({
-                userText: message
-            })
-        });
+    app.service('BotService', function($http) {
+        this.sendMessage = function(message) {
+            var response = $http({
+                method: 'GET',
+                url: 'https://api.projectoxford.ai/luis/v1/application?id=75e1eaed-2018-4061-a64d-0bb26ed74483&subscription-key=29c91a956a174549afe70038166ec627&q=' + message + '&timezoneOffset=8.0'
+            });
 
-        return response;
-    };
-});
+            return response;
+        };
+    });
 
 /*
 	UserService contains all the User
 	information needed to display
-*/
-app.service('UserService', function() {
-    this.displayName = '';
-    this.userUid = '';
-	this.photoURL = '';
+    */
+    app.service('UserService', function() {
+        this.displayName = '';
+        this.userUid = '';
+        this.photoURL = '';
+
+    // Adding flight to the database, user's purchased
+    // ticket
+    this.AddFlight = function() {
+        var url = '/AddFlight/' + this.userUid;
+    }
 });
 
 
 /*
 	FlightService contains all the cart
 	information
-*/
-app.service('FlightService', function() {
-	this.myFlights = [
-		{
-			departureAirport: 'SIN',
-			arrivalAirport: 'DOH',
-			departureDateTime: '2016-11-01T20:25:00',
-			arrivalDateTime: '2016-11-01T23:25:00,',
-			flightNumber: '739',
-			flightCode: 'QR'
-		},
+    */
+    app.service('FlightService', function($http) {
+        this.flightDetails = [];
+        this.myFlights = [
         {
-            departureAirport: 'LAS',
-            arrivalAirport: 'SIN',
-            departureDateTime: '2016-11-01T20:25:00',
-            arrivalDateTime: '2016-11-01T23:25:00,',
-            flightNumber: '739',
-            flightCode: 'QR'
-        },
-        {
-            departureAirport: 'LAS',
-            arrivalAirport: 'SIN',
-            departureDateTime: '2016-11-01T20:25:00',
-            arrivalDateTime: '2016-11-01T23:25:00,',
-            flightNumber: '739',
-            flightCode: 'QR'
-        },
-        {
-            departureAirport: 'LAS',
-            arrivalAirport: 'SIN',
-            departureDateTime: '2016-11-01T20:25:00',
-            arrivalDateTime: '2016-11-01T23:25:00,',
-            flightNumber: '739',
-            flightCode: 'QR'
-        },
-        {
-            departureAirport: 'LAS',
-            arrivalAirport: 'SIN',
-            departureDateTime: '2016-11-01T20:25:00',
-            arrivalDateTime: '2016-11-01T23:25:00,',
-            flightNumber: '739',
-            flightCode: 'QR'
-        },
-        {
-            departureAirport: 'LAS',
-            arrivalAirport: 'SIN',
-            departureDateTime: '2016-11-01T20:25:00',
-            arrivalDateTime: '2016-11-01T23:25:00,',
-            flightNumber: '739',
-            flightCode: 'QR'
-        }
-	];
+    "Amount": "828.50",
+    "ArrivalDateTime": "2016-11-01T14:15:00",
+    "CurrencyCode": "SGD",
+    "DepartureDate": "2016-11-01",
+    "DepartureDateTime": "2016-11-01T02:05:00",
+    "FlightNumber": [
+      945,
+      739
+    ],
+    "Path": "SIN > DOH > LAX"
+  },
+  {
+    "Amount": "828.50",
+    "ArrivalDateTime": "2016-11-02T14:15:00",
+    "CurrencyCode": "SGD",
+    "DepartureDate": "2016-11-01",
+    "DepartureDateTime": "2016-11-01T20:25:00",
+    "FlightNumber": [
+      947,
+      739
+    ],
+    "Path": "SIN > DOH > LAX"
+  },
+  {
+    "Amount": "848.40",
+    "ArrivalDateTime": "2016-11-02T09:00:00",
+    "CurrencyCode": "SGD",
+    "DepartureDate": "2016-11-01",
+    "DepartureDateTime": "2016-11-01T20:10:00",
+    "FlightNumber": [
+      512,
+      112
+    ],
+    "Path": "SIN > MNL > LAX"
+  },
+  {
+    "Amount": "848.40",
+    "ArrivalDateTime": "2016-11-01T18:35:00",
+    "CurrencyCode": "SGD",
+    "DepartureDate": "2016-11-01",
+    "DepartureDateTime": "2016-11-01T10:30:00",
+    "FlightNumber": [
+      502,
+      102
+    ],
+    "Path": "SIN > MNL > LAX"
+  },
+  {
+    "Amount": "848.40",
+    "ArrivalDateTime": "2016-11-01T18:35:00",
+    "CurrencyCode": "SGD",
+    "DepartureDate": "2016-11-01",
+    "DepartureDateTime": "2016-11-01T14:50:00",
+    "FlightNumber": [
+      508,
+      102
+    ],
+    "Path": "SIN > MNL > LAX"
+  }
+    ];
 
+    this.fetchFlightDetails = function() {
+        var result = $http({
+            method: "GET",
+            url: "https://sabrehack2016.azurewebsites.net/GetFlightInformation"
+        })
 
+        return result;
+    }
 });
 
 
 /*
     HotelService contains information needed
     to display details for the hotels
-*/
-app.service('HotelService', function() {
-    this.myHotels = [
+    */
+    app.service('HotelService', function() {
+        this.myHotels = [
         {
             location: 'Princep Street',
             hotelName: 'Marriot Hotel',
@@ -254,5 +310,5 @@ app.service('HotelService', function() {
             checkIn: '2016-11-01T23:25:00',
             checkOut: '2016-11-01T23:25:00'
         }
-    ];
-});
+        ];
+    });
