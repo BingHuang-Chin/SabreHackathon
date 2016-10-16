@@ -44,8 +44,12 @@ var $$ = Dom7;
         $scope.pageTitle = 'Sabre';
         $scope.botName = 'Sabre';
         $scope.flightDetails = FlightService.myFlight;
-        $scope.hotelDetails = HotelService.myHotels;
-        $scope.details = FlightService.getFlights;
+        $scope.hotelDetails = HotelService.getHotels;
+        $scope.getFlights = FlightService.getFlights;
+        $scope.getHotels = HotelService.getHotels;
+
+        $scope.getHotelCalled = false;
+        $scope.getFlightCalled = false;
 
         $scope.displayFlight = false;
         $scope.displayHotel = false;
@@ -57,7 +61,7 @@ var $$ = Dom7;
             $('.chat-history').append(createBotMessage("Added your Flight to confirmation list! What can I help you with next? Book a hotel?"));
         }
 
-        #scope.addHotel = function(selectedHotel){
+        $scope.addHotel = function(selectedHotel){
             FlightService.myHotels.push(selectedHotel);
             fw7.closePanel('right');
 
@@ -122,25 +126,26 @@ var $$ = Dom7;
             switch(result.data.intents[0].intent){
                 case "findFlight": {
 
-                    $('.chat-history').append(createBotMessage("Sure! Finding all the available flights for you now!"));
+                    $('.chat-history').append(createBotMessage("Sure! Finding all the available Flights for you now!"));
 
-                    // Rebind Data
-                    console.log(FlightService.myFlights)
-                    for(flight in FlightService.myFlights){
-                        console.log(flight.DepartureDateTime)
-
-                        var departureDateTime = moment(flight.DepartureDateTime).format('MMMM Do YYYY h:mm:ss a');
-                        var arrivalDateTime = moment(flight.ArrivalDateTime).format('MMMM Do YYYY h:mm:ss a');
-
-                        console.log(departureDateTime);
-
-                        flight.DepartureDateTime = departureDateTime;
-                        flight.ArrivalDateTime = arrivalDateTime;
-                    }
+                    $scope.getFlightCalled = true;
+                    $scope.getHotelCalled = false;
 
                     // // Open Panel
                     fw7.openPanel('right');
                     break;
+                }
+                case "findHotel":{
+
+                    $('.chat-history').append(createBotMessage("Sure! Finding all the available Hotels for you now!"));
+
+                    $scope.getFlightCalled = false;
+                    $scope.getHotelCalled = true;
+
+                    // // Open Panel
+                    fw7.openPanel('right');
+
+
                 }
                 case "greetings": {
                     console.log(result.data.intents[0].intent);

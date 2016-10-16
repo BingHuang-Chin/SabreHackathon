@@ -19,7 +19,7 @@
 			<p>Right Panel content here</p>
 			<p><a href="#" class="close-panel">X</a></p>
 			<p>
-				<div class="card" ng-repeat="detail in details">
+				<div class="card" ng-repeat="detail in getFlights" ng-if="getFlightCalled">
 					<div class="card-header">
 						<h1>{{detail.Path}}</h1>
 					</div>
@@ -43,6 +43,28 @@
 				</div>
 			</p>
 		</div>
+
+
+		<!-- Hotels -->
+		<div class="card" ng-repeat="hotelDetail in getHotels" ng-if="getHotelCalled">
+		  <div class="card-header">
+		  	<h1>{{hotelDetail.hotelName}}</h1> <br />
+		  	{{hotelDetail.location}}
+		  </div>
+		  <div class="card-content">
+		    <div class="card-content-inner">
+		    	<p>
+		    		<h3>Check-In</h3>
+		    		Date: {{ hotelDetail.checkIn }}<br />
+		    		Time: {{ hotelDetail.checkIn }}<br />
+
+		    		<h3>Check-Out</h3>
+		    		Date: {{ hotelDetail.checkOut }}<br />
+		    		Time: {{ hotelDetail.checkOut }}<br />
+		    	</p>
+		    </div>
+		  </div>
+		 </div>
 	</div>
 
 
