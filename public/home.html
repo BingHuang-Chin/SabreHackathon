@@ -32,8 +32,7 @@
 
 								<h3>Arrival Details</h3>
 								{{ detail.ArrivalDateTime }}<br />
-
-								<h3>Price</h3>
+								
 								{{detail.CurrencyCode}} {{detail.Amount}}
 							</p>
 						</div>
@@ -105,23 +104,23 @@
 					<!-- Flights -->
 					<div class="content-block-title" ng-if="displayFlight || displayFlight == false && displayHotel == false">Flights</div>
 					<div class="card" ng-repeat="flightDetail in flightDetails" ng-if="displayFlight || displayFlight == false && displayHotel == false ">
-					  <div class="card-header">
-					  	<h1>{{flightDetail.departureAirport}} to {{flightDetail.arrivalAirport}}</h1>
-					  </div>
-					  <div class="card-content">
-					    <div class="card-content-inner">
-					    	<h2>{{flightDetail.flightCode}} {{flightDetail.flightNumber}}</h2>
-					    	<p>
-					    		<h3>Departure Details</h3>
-					    		Date: {{ flightDetail.departureDateTime }}<br />
-					    		Time: {{ flightDetail.departureDateTime }}<br />
+						<div class="card-header">
+							<h1>{{flightDetail.Path}}</h1>
+						</div>
+						<div class="card-content">
+							<div class="card-content-inner">
+								<h2>{{flightDetail.flightCode}} {{flightDetail.flightNumber}}</h2>
+								<p>
+									<h3>Departure Details</h3>
+									{{ flightDetail.DepartureDateTime }}<br />
 
-					    		<h3>Arrival Details</h3>
-					    		Date: {{ flightDetail.arrivalDateTime }}<br />
-					    		Time: {{ flightDetail.arrivalDateTime }}<br />
-					    	</p>
-					    </div>
-					  </div>
+									<h3>Arrival Details</h3>
+									{{ flightDetail.ArrivalDateTime }}<br />
+									
+									{{flightDetail.CurrencyCode}} {{flightDetail.Amount}}
+								</p>
+							</div>
+						</div>
 					</div>
 
 					<!-- Hotels -->
