@@ -159,7 +159,7 @@ var $$ = Dom7;
                     console.log(result.data.intents[0].intent);
                     break;
                 }
-                default: 
+                default:
                 $('.chat-history').append(createBotMessage("Sorry, I did not understand that. Could you please repeat yourself?"));
             }
                 // fw7.openPanel('right');
@@ -325,28 +325,28 @@ var $$ = Dom7;
     app.service('HotelService', function() {
         this.getHotels = [
         {
-            location: 'Princep Street',
-            hotelName: 'Marriot Hotel',
-            checkIn: '2016-11-01T23:25:00',
-            checkOut: '2016-11-01T23:25:00'
+            location: 'Cotulla, Cotulla(TX)',
+            hotelName: 'Best Western Cowboy Inn',
+            checkIn: 'November 1th 2016, 23:25',
+            checkOut: 'November 3rd 2016, 23:25'
         },
         {
-            location: 'Princep Street',
-            hotelName: 'Marriot Hotel',
-            checkIn: '2016-11-01T23:25:00',
-            checkOut: '2016-11-01T23:25:00'
+            location: '807 W. HWY 117, Dilley, Dilley (TX), United States 78017',
+            hotelName: 'Dilley Motor Inn',
+            checkIn: 'November 1th 2016, 23:25',
+            checkOut: 'November 3rd 2016, 23:25'
         },
         {
-            location: 'Princep Street',
-            hotelName: 'Marriot Hotel',
-            checkIn: '2016-11-01T23:25:00',
-            checkOut: '2016-11-01T23:25:00'
+            location: '16301 South Ih-35, Dilley, Dilley (TX), United States 78017',
+            hotelName: 'Super 8 Dilley',
+            checkIn: 'November 1th 2016, 23:25',
+            checkOut: 'November 3rd 2016, 23:25'
         },
         {
-            location: 'Princep Street',
-            hotelName: 'Marriot Hotel',
-            checkIn: '2016-11-01T23:25:00',
-            checkOut: '2016-11-01T23:25:00'
+            location: 'Holiday Inn Express Hotels Cotulla',
+            hotelName: '624 Las Palmas, Cotulla, Cotulla (TX), United States 78014',
+            checkIn: 'November 1th 2016, 23:25',
+            checkOut: 'November 3rd 2016, 23:25'
         }
         ];
 
