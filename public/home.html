@@ -32,13 +32,13 @@
 
 								<h3>Arrival Details</h3>
 								{{ detail.ArrivalDateTime }}<br />
-								
+
 								{{detail.CurrencyCode}} {{detail.Amount}}
 							</p>
 						</div>
 					</div>
 					<div class="card-footer">
-						<p><a href="#" class="button">Purchase</a>
+						<p><a href="#" class="button" ng-click="addFlight(detail)">Purchase</a>
 					</div>
 				</div>
 			</p>

@@ -43,12 +43,26 @@ var $$ = Dom7;
     app.controller('HomeController', function($scope, FirebaseService, BotService, UserService, FlightService, HotelService) {
         $scope.pageTitle = 'Sabre';
         $scope.botName = 'Sabre';
-        $scope.flightDetails = FlightService.myFlights;
+        $scope.flightDetails = FlightService.myFlight;
         $scope.hotelDetails = HotelService.myHotels;
-        $scope.details = FlightService.myFlights;
+        $scope.details = FlightService.getFlights;
 
         $scope.displayFlight = false;
         $scope.displayHotel = false;
+
+        $scope.addFlight = function(selectedFlight){
+            FlightService.myFlight.push(selectedFlight);
+            fw7.closePanel('right');
+
+            $('.chat-history').append(createBotMessage("Added your Flight to confirmation list! What can I help you with next? Book a hotel?"));
+        }
+
+        #scope.addHotel = function(selectedHotel){
+            FlightService.myHotels.push(selectedHotel);
+            fw7.closePanel('right');
+
+            $('.chat-history').append(createBotMessage("Added your Hotel to confirmation list! What can I help you with next? Find attractions?"));
+        }
 
         FirebaseService.Login()
         .then(function() {
@@ -110,9 +124,7 @@ var $$ = Dom7;
 
                     $('.chat-history').append(createBotMessage("Sure! Finding all the available flights for you now!"));
 
-
                     // Rebind Data
-
                     console.log(FlightService.myFlights)
                     for(flight in FlightService.myFlights){
                         console.log(flight.DepartureDateTime)
@@ -221,7 +233,7 @@ var $$ = Dom7;
     */
     app.service('FlightService', function($http) {
         this.flightDetails = [];
-        this.myFlights = [
+        this.getFlights = [
         {
         "Amount": "828.50",
         "ArrivalDateTime": "November 1th 2016, 14:15",
@@ -288,6 +300,8 @@ var $$ = Dom7;
       }
     ];
 
+    this.myFlight = [];
+
     this.fetchFlightDetails = function() {
         var result = $http({
             method: "GET",
@@ -304,7 +318,7 @@ var $$ = Dom7;
     to display details for the hotels
     */
     app.service('HotelService', function() {
-        this.myHotels = [
+        this.getHotels = [
         {
             location: 'Princep Street',
             hotelName: 'Marriot Hotel',
@@ -330,4 +344,6 @@ var $$ = Dom7;
             checkOut: '2016-11-01T23:25:00'
         }
         ];
+
+        this.myHotels = [];
     });
