@@ -124,6 +124,9 @@
 				<div id="detail-output" class="content-block col-45 center">
 					<!-- Flights -->
 					<div class="content-block-title" ng-if="displayFlight || displayFlight == false && displayHotel == false">Flights</div>
+					<div class="content-block-title" ng-show="flightDetails.length ==0 ">
+							<h2>No flights booked</h2>
+					</div>
 					<div class="card" ng-repeat="flightDetail in flightDetails" ng-if="displayFlight || displayFlight == false && displayHotel == false ">
 						<div class="card-header">
 							<h1>{{flightDetail.Path}}</h1>
@@ -146,6 +149,9 @@
 
 					<!-- Hotels -->
 					<div class="content-block-title" ng-if="displayHotel || displayFlight == false && displayHotel == false">Hotels</div>
+					<div class="content-block-title" ng-show="hotelDetails.length ==0 ">
+						<h2>No hotels booked</h2>
+					</div>
 					<div class="card" ng-repeat="hotelDetail in hotelDetails" ng-if="displayHotel || displayFlight == false && displayHotel == false ">
 					  <div class="card-header">
 					  	<h1>{{hotelDetail.hotelName}}</h1> <br />
