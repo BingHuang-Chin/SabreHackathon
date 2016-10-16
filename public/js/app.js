@@ -42,7 +42,7 @@ var $$ = Dom7;
 
     app.controller('HomeController', function($scope, FirebaseService, BotService, UserService, FlightService, HotelService) {
         $scope.pageTitle = 'Sabre';
-        $scope.botName = 'Sabre';
+        $scope.botName = 'Marco Biedermann';
         $scope.flightDetails = FlightService.myFlight;
         $scope.hotelDetails = HotelService.myHotel;
         $scope.getFlights = FlightService.getFlights;
