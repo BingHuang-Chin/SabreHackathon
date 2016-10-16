@@ -43,12 +43,26 @@ var $$ = Dom7;
     app.controller('HomeController', function($scope, FirebaseService, BotService, UserService, FlightService, HotelService) {
         $scope.pageTitle = 'Sabre';
         $scope.botName = 'Sabre';
-        $scope.flightDetails = FlightService.myFlights;
+        $scope.flightDetails = FlightService.myFlight;
         $scope.hotelDetails = HotelService.myHotels;
-        $scope.details = FlightService.myFlights;
+        $scope.details = FlightService.getFlights;
 
         $scope.displayFlight = false;
         $scope.displayHotel = false;
+
+        $scope.addFlight = function(selectedFlight){
+            FlightService.myFlight.push(selectedFlight);
+            fw7.closePanel('right');
+
+            $('.chat-history').append(createBotMessage("Added your Flight to confirmation list! What can I help you with next? Book a hotel?"));
+        }
+
+        #scope.addHotel = function(selectedHotel){
+            FlightService.myHotels.push(selectedHotel);
+            fw7.closePanel('right');
+
+            $('.chat-history').append(createBotMessage("Added your Hotel to confirmation list! What can I help you with next? Find attractions?"));
+        }
 
         FirebaseService.Login()
         .then(function() {
@@ -107,9 +121,22 @@ var $$ = Dom7;
             console.log(result.data.entities);
             switch(result.data.intents[0].intent){
                 case "findFlight": {
-                    // console.log(result.data.intents[0].intent);
-                
-                    // // Bind Data
+
+                    $('.chat-history').append(createBotMessage("Sure! Finding all the available flights for you now!"));
+
+                    // Rebind Data
+                    console.log(FlightService.myFlights)
+                    for(flight in FlightService.myFlights){
+                        console.log(flight.DepartureDateTime)
+
+                        var departureDateTime = moment(flight.DepartureDateTime).format('MMMM Do YYYY h:mm:ss a');
+                        var arrivalDateTime = moment(flight.ArrivalDateTime).format('MMMM Do YYYY h:mm:ss a');
+
+                        console.log(departureDateTime);
+
+                        flight.DepartureDateTime = departureDateTime;
+                        flight.ArrivalDateTime = arrivalDateTime;
+                    }
 
                     // // Open Panel
                     fw7.openPanel('right');
@@ -206,68 +233,74 @@ var $$ = Dom7;
     */
     app.service('FlightService', function($http) {
         this.flightDetails = [];
-        this.myFlights = [
+        this.getFlights = [
         {
-    "Amount": "828.50",
-    "ArrivalDateTime": "2016-11-01T14:15:00",
-    "CurrencyCode": "SGD",
-    "DepartureDate": "2016-11-01",
-    "DepartureDateTime": "2016-11-01T02:05:00",
-    "FlightNumber": [
-      945,
-      739
-    ],
-    "Path": "SIN > DOH > LAX"
-  },
-  {
-    "Amount": "828.50",
-    "ArrivalDateTime": "2016-11-02T14:15:00",
-    "CurrencyCode": "SGD",
-    "DepartureDate": "2016-11-01",
-    "DepartureDateTime": "2016-11-01T20:25:00",
-    "FlightNumber": [
-      947,
-      739
-    ],
-    "Path": "SIN > DOH > LAX"
-  },
-  {
-    "Amount": "848.40",
-    "ArrivalDateTime": "2016-11-02T09:00:00",
-    "CurrencyCode": "SGD",
-    "DepartureDate": "2016-11-01",
-    "DepartureDateTime": "2016-11-01T20:10:00",
-    "FlightNumber": [
-      512,
-      112
-    ],
-    "Path": "SIN > MNL > LAX"
-  },
-  {
-    "Amount": "848.40",
-    "ArrivalDateTime": "2016-11-01T18:35:00",
-    "CurrencyCode": "SGD",
-    "DepartureDate": "2016-11-01",
-    "DepartureDateTime": "2016-11-01T10:30:00",
-    "FlightNumber": [
-      502,
-      102
-    ],
-    "Path": "SIN > MNL > LAX"
-  },
-  {
-    "Amount": "848.40",
-    "ArrivalDateTime": "2016-11-01T18:35:00",
-    "CurrencyCode": "SGD",
-    "DepartureDate": "2016-11-01",
-    "DepartureDateTime": "2016-11-01T14:50:00",
-    "FlightNumber": [
-      508,
-      102
-    ],
-    "Path": "SIN > MNL > LAX"
-  }
+        "Amount": "828.50",
+        "ArrivalDateTime": "November 1th 2016, 14:15",
+        "CurrencyCode": "SGD",
+        "DepartureDate": "2016-11-01",
+        "DepartureDateTime": "November 1th 2016, 02:05",
+        "FlightNumber": [
+          945,
+          739
+        ],
+        "Path": "SIN > DOH > LAX"
+      },
+      {
+        "Amount": "828.50",
+        "ArrivalDateTime": "November 2nd 2016, 14:15",
+        "CurrencyCode": "SGD",
+        "DepartureDate": "2016-11-01",
+        "DepartureDateTime": "November 1th 2016, 20:25",
+        "FlightNumber": [
+          947,
+          739
+        ],
+        "Path": "SIN > DOH > LAX"
+      },
+      {
+        "Amount": "848.40",
+        "ArrivalDateTime": "November 2nd 2016, 09:00",
+        "CurrencyCode": "SGD",
+        "DepartureDate": "2016-11-01",
+        "DepartureDateTime": "November 1th 2016, 20:10",
+        "FlightNumber": [
+          512,
+          112
+        ],
+        "Path": "SIN > MNL > LAX"
+      },
+      {
+        "Amount": "848.40",
+        "ArrivalDateTime": "November 1th 2016, 18:35",
+        "CurrencyCode": "SGD",
+        "DepartureDate": "2016-11-01",
+        "DepartureDateTime": "November 1th 2016, 10:30",
+        "FlightNumber": [
+          502,
+          102
+        ],
+        "Path": "SIN > MNL > LAX"
+      },
+      {
+        "Amount": "848.40",
+        "ArrivalDateTime": "November 1th 2016, 18:35",
+        "CurrencyCode": "SGD",
+        "DepartureDate": "2016-11-01",
+        "DepartureDateTime": "November 1th 2016, 14:50",
+        "FlightNumber": [
+          508,
+          102
+        ],
+        "Path": "SIN > MNL > LAX",
+        "Transfer":[
+            "SIN > MNL",
+            "MNL > LAX"
+        ]
+      }
     ];
+
+    this.myFlight = [];
 
     this.fetchFlightDetails = function() {
         var result = $http({
@@ -285,7 +318,7 @@ var $$ = Dom7;
     to display details for the hotels
     */
     app.service('HotelService', function() {
-        this.myHotels = [
+        this.getHotels = [
         {
             location: 'Princep Street',
             hotelName: 'Marriot Hotel',
@@ -311,4 +344,6 @@ var $$ = Dom7;
             checkOut: '2016-11-01T23:25:00'
         }
         ];
+
+        this.myHotels = [];
     });
