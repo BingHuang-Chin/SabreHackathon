@@ -138,7 +138,7 @@
 
 									<h3>Arrival Details</h3>
 									{{ flightDetail.ArrivalDateTime }}<br />
-									
+
 									{{flightDetail.CurrencyCode}} {{flightDetail.Amount}}
 								</p>
 							</div>
@@ -150,18 +150,17 @@
 					<div class="card" ng-repeat="hotelDetail in hotelDetails" ng-if="displayHotel || displayFlight == false && displayHotel == false ">
 					  <div class="card-header">
 					  	<h1>{{hotelDetail.hotelName}}</h1> <br />
-					  	{{hotelDetail.location}}
 					  </div>
 					  <div class="card-content">
 					    <div class="card-content-inner">
 					    	<p>
+									<h3>Address</h3>
+									{{hotelDetail.location}}
 					    		<h3>Check-In</h3>
 					    		Date: {{ hotelDetail.checkIn }}<br />
-					    		Time: {{ hotelDetail.checkIn }}<br />
 
 					    		<h3>Check-Out</h3>
 					    		Date: {{ hotelDetail.checkOut }}<br />
-					    		Time: {{ hotelDetail.checkOut }}<br />
 					    	</p>
 					    </div>
 					  </div>
