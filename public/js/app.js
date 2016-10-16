@@ -44,7 +44,7 @@ var $$ = Dom7;
         $scope.pageTitle = 'Sabre';
         $scope.botName = 'Sabre';
         $scope.flightDetails = FlightService.myFlight;
-        $scope.hotelDetails = HotelService.getHotels;
+        $scope.hotelDetails = HotelService.myHotel;
         $scope.getFlights = FlightService.getFlights;
         $scope.getHotels = HotelService.getHotels;
 
@@ -62,7 +62,7 @@ var $$ = Dom7;
         }
 
         $scope.addHotel = function(selectedHotel){
-            FlightService.myHotels.push(selectedHotel);
+            HotelService.myHotel.push(selectedHotel);
             fw7.closePanel('right');
 
             $('.chat-history').append(createBotMessage("Added your Hotel to confirmation list! What can I help you with next? Find attractions?"));
@@ -350,5 +350,5 @@ var $$ = Dom7;
         }
         ];
 
-        this.myHotels = [];
+        this.myHotel = [];
     });

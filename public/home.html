@@ -63,6 +63,9 @@
 		    		Time: {{ hotelDetail.checkOut }}<br />
 		    	</p>
 		    </div>
+			<div class="card-footer">
+				<p><a href="#" class="button" ng-click="addHotel(hotelDetail)">Stay Here</a>
+			</div>
 		  </div>
 		 </div>
 	</div>
@@ -133,13 +136,13 @@
 							<div class="card-content-inner">
 								<h2>{{flightDetail.flightCode}} {{flightDetail.flightNumber}}</h2>
 								<p>
+									{{flightDetail.CurrencyCode}} {{flightDetail.Amount}}
+
 									<h3>Departure Details</h3>
 									{{ flightDetail.DepartureDateTime }}<br />
 
 									<h3>Arrival Details</h3>
 									{{ flightDetail.ArrivalDateTime }}<br />
-									
-									{{flightDetail.CurrencyCode}} {{flightDetail.Amount}}
 								</p>
 							</div>
 						</div>
