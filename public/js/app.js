@@ -50,9 +50,11 @@ var $$ = Dom7;
 
         $scope.getHotelCalled = false;
         $scope.getFlightCalled = false;
+        $scope.getAtttractionCalled = false;
 
         $scope.displayFlight = false;
         $scope.displayHotel = false;
+        $scope.displayAttraction = false;
 
         $scope.addFlight = function(selectedFlight){
             FlightService.myFlight.push(selectedFlight);
@@ -66,6 +68,10 @@ var $$ = Dom7;
             fw7.closePanel('right');
 
             $('.chat-history').append(createBotMessage("Added your Hotel to confirmation list! What can I help you with next? Find attractions?"));
+        }
+
+        $scope.addAttraction = function(selectedAttraction){
+            HotelService.myHotel.push(selectedAttraction);
         }
 
         FirebaseService.Login()
@@ -130,6 +136,7 @@ var $$ = Dom7;
 
                     $scope.getFlightCalled = true;
                     $scope.getHotelCalled = false;
+                    $scope.getAtttractionCalled = false;
 
                     // // Open Panel
                     fw7.openPanel('right');
@@ -141,12 +148,24 @@ var $$ = Dom7;
 
                     $scope.getFlightCalled = false;
                     $scope.getHotelCalled = true;
+                    $scope.getAtttractionCalled = false;
 
                     // // Open Panel
                     fw7.openPanel('right');
 
-
                 }
+                case "findAttraction":
+
+                    $('.chat-history').append(createBotMessage("Sure! Finding all the available Hotels for you now!"));
+
+                    $scope.getFlightCalled = false;
+                    $scope.getHotelCalled = false;
+                    $scope.getAtttractionCalled = true;
+
+
+                    // // Open Panel
+                    fw7.openPanel('right');
+                    break;
                 case "greetings": {
                     console.log(result.data.intents[0].intent);
                     break;
